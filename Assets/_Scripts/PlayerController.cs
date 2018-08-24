@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 			LocalGrippingPos = transform.localPosition;
 		}
 		rigidbody.useGravity = false;
+		rigidbody.isKinematic = true;
 		collider.isTrigger = true;
 		transform.localPosition = LocalGrippingPos;
 		Vector3 pseudX = Vector3.zero, pseudY = Vector3.zero, pseudZ = Vector3.zero;

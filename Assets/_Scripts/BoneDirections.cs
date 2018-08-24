@@ -19,6 +19,31 @@ public class BoneDirections : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		InitializeLocalRotations ();
 	}
+	public bool GetNowPseuds (Transform tra, out Vector3 pseudX, out Vector3 pseudY, out Vector3 pseudZ)
+	{
+		var rootT = animator.GetBoneTransform (HumanBodyBones.Hips).root;
+		var t = tra;
+
+		pseudX = Vector3.zero;
+		pseudY = Vector3.zero;
+		pseudZ = Vector3.zero;
+		pseudX = new Vector3 (
+			Vector3.Dot (t.right, rootT.right),
+			Vector3.Dot (t.up, rootT.right),
+			Vector3.Dot (t.forward, rootT.right)
+		);
+		pseudY = new Vector3 (
+			Vector3.Dot (t.right, rootT.up),
+			Vector3.Dot (t.up, rootT.up),
+			Vector3.Dot (t.forward, rootT.up)
+		);
+		pseudZ = new Vector3 (
+			Vector3.Dot (t.right, rootT.forward),
+			Vector3.Dot (t.up, rootT.forward),
+			Vector3.Dot (t.forward, rootT.forward)
+		);
+		return pseudX != Vector3.zero && pseudY != Vector3.zero && pseudZ != Vector3.zero;
+	}
 	public bool GetPseuds (Transform tra, out Vector3 pseudX, out Vector3 pseudY, out Vector3 pseudZ)
 	{
 		pseudX = Vector3.zero;
