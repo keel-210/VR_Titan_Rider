@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool OnGround;
 	Rigidbody rigidbody;
 	[SerializeField] Transform HMDTransform;
 	[SerializeField] HandController RightDevice, LeftDevice;
@@ -41,12 +42,23 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			Fall ();
-			if (RightDevice.IsWalking && LeftDevice.IsWalking)
-			{
-				Walk ();
-			}
-		}
+			
+            if (OnGround)
+            {
+                if (RightDevice.IsWalking && LeftDevice.IsWalking)
+                {
+                    Walk();
+                }
+                else
+                {
+                    Idle();
+                }
+            }
+            else
+            {
+                Fall();
+            }
+        }
 		OldRightGrippingState = RightDevice.IsHandGripping;
 		OldLeftGrippingState = LeftDevice.IsHandGripping;
 	}
@@ -105,4 +117,11 @@ public class PlayerController : MonoBehaviour
 		RightPosCash = RightDevice.transform.position;
 		LeftPosCash = LeftDevice.transform.position;
 	}
+    void Idle()
+    {
+        rigidbody.useGravity = true;
+        collider.isTrigger = false;
+        rigidbody.position = Vector3.zero;
+        rigidbody.rotation = Quaternion.Euler(0, 0, 0);
+    }
 }

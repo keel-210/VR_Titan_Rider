@@ -35,4 +35,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-Assets/Adam Character Pack/
+Assets/Adam Character Pack/*
